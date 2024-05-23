@@ -13,11 +13,11 @@ const tabuleiro = [
 
 let jogadorAtual = 'X';
 
-function imprimirTabuleiro() {
+const imprimirTabuleiro = () => {
     console.log(tabuleiro.map(linha => linha.join(' | ')).join('\n---------\n'));
 }
 
-function checarVencedor() {
+const checarVencedor = () => {
     const linhas = [
         [tabuleiro[0][0], tabuleiro[0][1], tabuleiro[0][2]],
         [tabuleiro[1][0], tabuleiro[1][1], tabuleiro[1][2]],
@@ -39,7 +39,7 @@ function checarVencedor() {
     return null;
 }
 
-function tabuleiroCheio() {
+const tabuleiroCheio = () => {
     return tabuleiro.every(linha => linha.every(celula => celula !== ' '));
 }
 
@@ -47,7 +47,7 @@ const ehEntradaValida = (linha, coluna) => {
     return Number.isInteger(linha) && Number.isInteger(coluna) && linha >= 0 && linha < 3 && coluna >= 0 && coluna < 3;
 }
 
-function jogar() {
+const jogar = () => {
     imprimirTabuleiro();
     rl.question(`Jogador ${jogadorAtual}, insira sua jogada (linha e coluna 0 a 2, separados por espaço. Ex.: 1 2): `, (input) => {
         const [linha, coluna] = input.split(' ').map(Number);
