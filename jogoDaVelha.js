@@ -5,7 +5,7 @@ const rl = readline.createInterface({
     output: process.stdout
 });
 
-let tabuleiro = [
+const tabuleiro = [
     [' ', ' ', ' '],
     [' ', ' ', ' '],
     [' ', ' ', ' ']
@@ -14,7 +14,7 @@ let tabuleiro = [
 let jogadorAtual = 'X';
 
 function imprimirTabuleiro() {
-    console.log(tabuleiro.map(row => row.join(' | ')).join('\n---------\n'));
+    console.log(tabuleiro.map(linha => linha.join(' | ')).join('\n---------\n'));
 }
 
 function checarVencedor() {
@@ -39,8 +39,12 @@ function checarVencedor() {
     return null;
 }
 
-function isFull() {
-    return tabuleiro.every(row => row.every(celula => celula !== ' '));
+function tabuleiroCheio() {
+    return tabuleiro.every(linha => linha.every(celula => celula !== ' '));
+}
+
+const ehEntradaValida = (linha, coluna) => {
+    return Number.isInteger(linha) && Number.isInteger(coluna) && linha >= 0 && linha < 3 && coluna >= 0 && coluna < 3;
 }
 
 function jogar() {
@@ -48,7 +52,7 @@ function jogar() {
     rl.question(`Jogador ${jogadorAtual}, insira sua jogada (linha e coluna 0 a 2, separados por espaço. Ex.: 1 2): `, (input) => {
         const [linha, coluna] = input.split(' ').map(Number);
         
-        if (Number.isInteger(linha) && Number.isInteger(coluna) && linha >= 0 && linha < 3 && coluna >= 0 && coluna < 3) {
+        if (ehEntradaValida) {
             if (tabuleiro[linha][coluna] === ' ') {
                 tabuleiro[linha][coluna] = jogadorAtual;
                 const vencedor = checarVencedor();
@@ -57,7 +61,7 @@ function jogar() {
                     imprimirTabuleiro();
                     console.log(`Jogador ${vencedor} venceu!`);
                     rl.close();
-                } else if (isFull()) {
+                } else if (tabuleiroCheio()) {
                     imprimirTabuleiro();
                     console.log('Empate!');
                     rl.close();
